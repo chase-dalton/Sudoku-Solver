@@ -26,39 +26,44 @@ def find_zero(board):
                 return(row,col)
                 
 
-board2=[[5, 3, 0, 0, 7, 0, 0, 0, 0],
-        [6, 0, 0, 1, 9, 5, 0, 0, 0],
-        [0, 9, 8, 0, 0, 0, 0, 6, 0]]
-
 
 def is_valid(board,row, col, value):
-    #making sure it's not a value that's already set
     coordinate = board[row][col]
     column = [row[col] for row in board]
+    box_x = row // 3
+    box_y = col // 3
+    
+    #making sure it's not a value that's already set
     if coordinate != 0:
         return "Not an Empty Space!"
+
     #checking if the value is in the row
     for item in board[row]:
         if item == value:
-            return "Value is in the row!"
+            return False
+            #return "Value is in the row!"
+
+    #checking if the value is in the column
         else:
             for item in column:
                 if item == value:
-                    return "Value is in the column!"
-
+                    return False
+                    #return "Value is in the column!"
+    
+    for i in range(box_y*3, box_y*3 + 3):
+        for j in range(box_x * 3, box_x*3 + 3):
+            if board[i][j] == value and i != row and j != col:
+                return False
+    return True
+    
 
 
 def print_col(board,col):
     return [row[col] for row in board]
-
-
-
-    
-
         
 
-print_board(board2)
+print_board(board)
 #print(find_zero(board2))
-print(is_valid(board2, 0, 2, 8))
+print(is_valid(board, 0, 2, 6))
 
 #print(print_col(board2,2))
